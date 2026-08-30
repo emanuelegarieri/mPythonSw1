@@ -1,3 +1,3 @@
-# My Game
+# Wordle
 
 Emanuele Garieri
