@@ -9,4 +9,4 @@ kilograms = int(total_grams // 1000)
 grams = total_grams % 1000
 
 print("The weight in modern units:")
-print(kilograms, "kilograms and", grams, "grams.")
+print(kilograms, "kilograms and", f"{grams:.2f}", "grams.")
