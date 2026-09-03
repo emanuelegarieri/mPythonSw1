@@ -1,4 +1,7 @@
 n = 1
-while n in range(1001):
-    print(n)
-    n=n+1
+
+while n <= 1000:
+    if n % 3 == 0:
+        print(n)
+
+    n = n + 1

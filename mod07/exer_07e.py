@@ -1,18 +1,13 @@
-list = []
+original_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
-def clean(list):
-    cleaned = []
-    for n in list:
+def filter_even_numbers(original_list):
+    filtered_list  = []
+    for n in original_list:
         if n % 2 == 0:
-            cleaned.append(n)
-    return cleaned
+            filtered_list .append(n)
+    return filtered_list 
 
 
-while True:
-    number = input("Add a number to the least to clean: ")
-    if number == "":
-        break
-    list.append(int(number))    
-
-print(clean(list))
+print(f"Original list: {original_list}")
+print(f"List with even numbers only: {filter_even_numbers(original_list)}")

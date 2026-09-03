@@ -1,7 +1,11 @@
 cities = []
-for n in range(5):
-    city = input("Give me a city: ")
-    cities.append(city)
 
-for n in range(len(cities)):
-    print(cities[n])
+for n in range(5):
+    city = input("Enter the name of a city: ")
+    cities.append(city)
+print()
+print()
+print("The cities you entered:")
+
+for city in cities:
+    print(city)

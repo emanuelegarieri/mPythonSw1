@@ -1,11 +1,11 @@
-num1 = int(input("Enter first number: "))
-num2 = int(input("Enter second number: "))
-num3 = int(input("Enter third number: "))
+num1 = int(input("Enter the first integer: "))
+num2 = int(input("Enter the second integer: "))
+num3 = int(input("Enter the third integer: "))
 
-sum = num1 + num2 + num3
-prod = num1 * num2 * num3
-avg = sum / 3
+sum_of_numbers = num1 + num2 + num3
+product_of_numbers = num1 * num2 * num3
+average_of_numbers = sum_of_numbers / 3
 
-print("Sum:", sum)
-print("Product:", prod)
-print("Average:", avg)
+print("The sum of the numbers:", sum_of_numbers)
+print("The product of the numbers:", product_of_numbers)
+print("The average of the numbers:", average_of_numbers)

@@ -1,17 +1,10 @@
-list = []
+number_list = [1, 2, 3, 4, 5]
 
+def sum_of_list(number_list):
+    calculation = 0
+    for n in number_list:
+        calculation += n
+    return calculation
 
-def calculate(list):
-    sum = 0
-    for n in list:
-        sum += n
-    return sum
-
-
-while True:
-    number = input("Add a number in the sum: ")
-    if number == "":
-        break
-    list.append(int(number))    
-
-print(calculate(list))
+ 
+print(f"The sum of the numbers in the list is: {sum_of_list(number_list)}")

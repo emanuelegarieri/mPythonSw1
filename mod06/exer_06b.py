@@ -1,11 +1,16 @@
 numbers = []
 
-number = input("Add a number: ")
 while True:
-    number = input("Add a number: ")
+    number = input("Enter a number: ")
+
     if number == "":
         break
-    numbers.append(int(number))
 
+    numbers.append(float(number))
 
-print(sorted(numbers, reverse=True)[:5])
+numbers.sort(reverse=True)
+
+print("The greatest numbers in descending order:")
+
+for n in numbers[:5]:
+    print(n)
