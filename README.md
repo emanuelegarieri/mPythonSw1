@@ -2,18 +2,10 @@
 
 Emanuele Garieri
 
-## Module 1
+## Exercises
 
-- [x] Greeting exercise
-
-## Module 2
-
-- [x] Git and GitHub configuration
-
-## Module 3
-
-- [x] Exercises 1–6
+- Done from Module 1 to Module 7
 
 ## Programming Project
 
-- [x] Project 1: Player name and age
+- Done until step 3
