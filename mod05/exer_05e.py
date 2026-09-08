@@ -8,12 +8,13 @@ while True:
     count += 1
 
     if count == 5:
-        print("Incorrect username or password. Please try again.")
+        print("Access denied")
         break
 
     if user == real_u and password == real_psw:
         print("Welcome")
         break
     else:
+        print("Incorrect username or password. Please try again.")
         continue
 
