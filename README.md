@@ -4,7 +4,7 @@ Emanuele Garieri
 
 ## Exercises
 
-- Done from Module 1 to Module 7
+- Done from Module 1 to Module 9
 
 ## Programming Project
 
