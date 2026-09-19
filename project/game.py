@@ -1,76 +1,70 @@
-name = input("Enter your name: ")
-age = int(input("Enter your age: "))
-
-guesses = []
-
-
-def new_game(guesses):
-    length = input("Choose the word length (5-8): ")
-    guess = input("Enter a " + length + "-letter word: ").strip().lower()
-
-    guesses.append(guess)
-
-    print("Guess added!\n")
+player_name = input("Enter your name: ")
+player_age = int(input("Enter your age: "))
+inventory = []
 
 
-def game_rules():
-    print(
-        "GAME RULES\n"
-        "Choose the length of the word.\n"
-        "Enter a word with the selected number of letters.\n"
-        "Try to find the correct word in as few attempts as possible.\n"
-    )
+def show_mission():
+    print("\nMISSION")
+    print("The community kitchen is producing too much waste.")
+    print("Your objective is to collect useful items and make the kitchen sustainable.\n")
 
 
-def show_stats(guesses):
-    print("STATS\n")
+def collect_item(items):
+    item = input("What item did you find? ").strip()
+    if item == "":
+        print("No item was added.\n")
+    else:
+        items.append(item)
+        print(f"{item} was added to your inventory.\n")
 
-    if len(guesses) == 0:
-        print("No guesses yet.\n")
-        return
 
-    print("Previous guesses:")
+def show_inventory(items):
+    print("\nINVENTORY")
+    if len(items) == 0:
+        print("Your inventory is empty.\n")
+    else:
+        for item in items:
+            print(f"- {item}")
+        print()
 
-    for guess in guesses:
-        print(guess)
 
-    print("Total guesses:", len(guesses))
-    print()
+def show_tip():
+    print("\nSUSTAINABILITY TIP")
+    print("Plan meals and reuse ingredients to reduce food waste.\n")
 
 
 def quit_game():
-    print("Exit the game..\n")
+    print("\nThank you for playing Green Kitchen Adventure!")
 
 
-if age < 12:
-    print("User is underage")
+print(f"\nPlayer: {player_name}")
+print(f"Age: {player_age}")
+
+if player_age < 12:
+    print("You are a minor. The game will now close.")
 else:
-    print("Welcome", name)
-    print("Let's play Wordle!")
-
+    print(f"\nWelcome, {player_name}!")
+    print("The community kitchen needs your help.")
     while True:
-        choice = input(
-            "MAIN MENU\n"
-            "play     - Start a new Wordle game\n"
-            "rules    - Display the game rules\n"
-            "stats    - Display your statistics\n"
-            "lopeta   - Exit the program\n"
+        command = input(
+            "\nMAIN MENU\n"
+            "mission   - Show the mission\n"
+            "collect   - Collect an item\n"
+            "inventory - Show your inventory\n"
+            "tip       - Show a sustainability tip\n"
+            "exit    - Exit the game\n"
+            "Enter command: "
         ).strip().lower()
-
-        if choice == "play":
-            print("New Game:\n")
-            new_game(guesses)
-
-        elif choice == "rules":
-            game_rules()
-
-        elif choice == "stats":
-            show_stats(guesses)
-
-        elif choice == "lopeta":
+        if command == "mission":
+            show_mission()
+        elif command == "collect":
+            collect_item(inventory)
+        elif command == "inventory":
+            show_inventory(inventory)
+        elif command == "tip":
+            show_tip()
+        elif command == "exit":
             quit_game()
             break
-
         else:
-            print("Invalid choice!\n")
-            continue
+            print("Unknown command. Please choose a command from the menu.")
