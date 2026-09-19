@@ -1,5 +1,18 @@
 import random
 
+
+def race(cars):
+    while all(car.travelled_distance < 10000 for car in cars):
+
+        for car in cars:
+            speed_change = random.randint(-10, 15)
+
+            car.accelerate(speed_change)
+            car.drive(1)
+
+    return cars
+
+
 class Car:
     def __init__ (self, reg_num, maximum_speed):
         self.license_plate = reg_num
@@ -21,16 +34,3 @@ class Car:
         self.travelled_distance += self.current_speed * hours
 
 
-    import random
-
-
-    def race(cars):
-        while all(car.travelled_distance < 10000 for car in cars):
-
-            for car in cars:
-                speed_change = random.randint(-10, 15)
-
-                car.accelerate(speed_change)
-                car.drive(1)
-
-        return cars
