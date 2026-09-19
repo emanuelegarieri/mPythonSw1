@@ -5,14 +5,14 @@ inventory = []
 
 def show_mission():
     print("\nMISSION")
-    print("The community kitchen is producing too much waste.")
+    print("The kitchen is producing too much waste.")
     print("Your objective is to collect useful items and make the kitchen sustainable.\n")
 
 
 def collect_item(items):
     item = input("What item did you find? ").strip()
     if item == "":
-        print("No item was added.\n")
+        print("It dropped from your hands!\n")
     else:
         items.append(item)
         print(f"{item} was added to your inventory.\n")
@@ -30,21 +30,26 @@ def show_inventory(items):
 
 def show_tip():
     print("\nSUSTAINABILITY TIP")
-    print("Plan meals and reuse ingredients to reduce food waste.\n")
+    print("Plan properly your meals and ingredients to reduce food waste.\n")
 
 
 def quit_game():
     print("\nThank you for playing Green Kitchen Adventure!")
 
 
+# Print Name and Age
 print(f"\nPlayer: {player_name}")
 print(f"Age: {player_age}")
 
+# Block if underage
 if player_age < 12:
     print("You are a minor. The game will now close.")
+
+# Otherwise
 else:
+    #Welcome and options
     print(f"\nWelcome, {player_name}!")
-    print("The community kitchen needs your help.")
+    print("The kitchen needs your help.")
     while True:
         command = input(
             "\nMAIN MENU\n"
@@ -55,16 +60,22 @@ else:
             "exit    - Exit the game\n"
             "Enter command: "
         ).strip().lower()
+        # If mission
         if command == "mission":
             show_mission()
+        # If collect
         elif command == "collect":
             collect_item(inventory)
+        # If Inventory
         elif command == "inventory":
             show_inventory(inventory)
+        # If tip
         elif command == "tip":
             show_tip()
+        # IF exit
         elif command == "exit":
             quit_game()
             break
+        # If error
         else:
             print("Unknown command. Please choose a command from the menu.")
