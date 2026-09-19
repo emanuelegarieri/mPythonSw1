@@ -4,7 +4,7 @@ Emanuele Garieri
 
 ## Game
 
-Green Kitchen Adventure is an adventure about a community kitchen that produces too much waste. 
+Green Kitchen Adventure is an adventure about a kitchen that produces too much waste. 
 The player's objective is to collect items and help make the kitchen more sustainable.
 
 The game is suitable for minors and does not contain violent or inappropriate content.
