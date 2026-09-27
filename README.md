@@ -4,9 +4,9 @@ Emanuele Garieri
 
 ## Exercises
 
-- Done from Module 1 to Module 10
+- Done from Module 1 to Module 13
 
 ## Programming Project
 
-- Done until step 3
+- Done until step 4
 
