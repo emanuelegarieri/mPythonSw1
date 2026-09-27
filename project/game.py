@@ -153,21 +153,21 @@ def play(player):
             if (player.salad_plated and player.kitchen_clean
                     and player.bio_bag_disposed and player.towel_returned
                     and player.clothes_returned):
-                print()
                 print(green + "You served the salad and closed the clean Kitchen. Good job!" + reset)
+                print()
                 break
             else:
-                print()
                 print(blue + "Something is still missing. Look carefully!" + reset)
+                print()
         elif command == "12":
             show_tip()
         elif command == "13":
-            print()
             print("Thank you for playing Green Kitchen Adventure!")
+            print()
             break
         else:
-            print()
             print(red + "Invalid menu number! Please choose a number from 1 to 13!" + reset)
+            print()
 
 # Colors
 blue = "\033[34m"
