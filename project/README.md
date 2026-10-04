@@ -17,7 +17,7 @@ the salad. This also fills the Bio Bag with food waste.
 
 To win, the player must clean the Kitchen, dispose of the full Bio Bag in the
 Garbage Room, and return the dirty work clothes and towel to the Changing
-Room. The `finish` command serves the salad only when every task is complete.
+Room. The `Finish` command serves the salad only when every task is complete.
 Otherwise, the game says that something is still missing.
 
 The game has three rooms: Changing Room, Kitchen, and Garbage Room. The rooms
@@ -30,19 +30,20 @@ Enter the number beside an action in the main menu. When moving or collecting
 an item, choose the number shown in that list. The numbers are assigned again
 each time a list is displayed.
 
-1. **Mission**:   Read the objective.
-2. **Look**:      See the current room, its items, and its exits.
-3. **Move**:      Go to another room.
-4. **Wash**:      Wash your hands in the Kitchen.
-5. **Collect**:   Pick up an item from the current room.
+1. **Mission**: Read the objective.
+2. **Look**: See the current room, its items, and its exits.
+3. **Move**: Go to another room.
+4. **Wash**: Wash your hands in the Kitchen.
+5. **Collect**: Pick up an item from the current room.
 6. **Inventory**: See the items you are carrying and their weights.
-7. **Prepare**:   Prepare and plate the salad when you have collected everything needed.
-8. **Clean**:     Clean the Kitchen.
-9. **Dispose**:   Throw away the full Bio Bag in the Garbage Room.
-10. **Return**:   Return the dirty work clothes and towel in the Changing Room.
-11. **Finish**:   Serve the salad and win if all tasks are complete.
-12. **Tip**:      Read a real-life tip about reducing food waste.
-13. **Exit**:     Leave the game.
+7. **Prepare**: Prepare and plate the salad after collecting everything needed.
+8. **Clean**: Clean the Kitchen.
+9. **Dispose**: Throw away the full Bio Bag in the Garbage Room.
+10. **Return**: Return the dirty clothes and towel in the Changing Room.
+11. **Finish**: Serve the salad and win if all tasks are complete.
+12. **Tip**: Read a sustainability tip about reducing food waste.
+13. **Exit**: Save progress and leave the game.
+14. **Save**: Save progress and keep playing.
 
 ## Sustainable development
 
@@ -55,11 +56,30 @@ shopping and using ingredients that will expire soon.
 ## Project structure
 
 - `game.py` creates the rooms and items, displays the menus, and runs the game.
-- `models.py` contains the `Item`, `Room`, and `Player` classes. The player
-  object stores the inventory, current location, and progress through the game.
+- `models.py` contains the `Item`, `Room`, and `Player` classes.
+- `storage.py` reads the introductory text and saves or loads game progress.
+- `intro.txt` contains the introductory text shown when the game starts.
+- `instructions.txt` contains the game instructions.
+- `save_<code>.csv` stores the progress of a saved game.
 
 Run the game with `python game.py` from the project folder.
 
-This is the Project 4 version. Reading the introduction from separate text
-files and saving or loading progress are planned for Project 5 and are not
-implemented yet.
+## Project 5: starting and saving
+
+When the program starts, it reads the introduction and instructions from
+`intro.txt` and `instructions.txt`.
+
+Choose **1. New game** and enter a new save code containing letters a-z and
+numbers. Then enter the player's name and age.
+
+Choose **2. Continue a saved game** and enter the same code to resume the game.
+
+Choose **14. Save** while playing to save progress and continue playing.
+Choose **13. Exit** to save progress before closing the game.
+
+The CSV save file contains the player's name, age, current room, inventory,
+remaining room items, and mission progress.
+
+If an introductory text file is missing, the game displays an error message
+but remains available. Missing or invalid save files are rejected without
+crashing the program.

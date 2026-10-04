@@ -1,4 +1,5 @@
 from models import Item, Player, Room
+from storage import load_game, save_game, save_path, show_start_text
 
 
 def show_mission(): # <-- Show mission funcion
@@ -68,16 +69,17 @@ def show_menu():
     print("11. Finish   - Serve the salad and close the Kitchen")
     print("12. Tip      - Show a sustainability tip")
     print("13. Exit     - Exit the game")
+    print("14. Save     - Save your progress")
     print()
     command = input("Enter number: ").strip()
     return command
 
 
-def play(player):
+def play(player, save_code):
     print()
     print(green + "Welcome, " + player.name + "!" + reset)
     print(yellow + "The kitchen needs your help!" + reset)
-    print(blue + "You are in the Changing Room now" + reset)
+    print(blue + "You are in the " + player.location.name + " now" + reset)
     while True:
         # All the commands here
         command = show_menu()
@@ -162,11 +164,16 @@ def play(player):
         elif command == "12":
             show_tip()
         elif command == "13":
-            print("Thank you for playing Green Kitchen Adventure!")
-            print()
-            break
+            if save_game(player, rooms, save_code):
+                print("Game saved. Your code is: " + save_code)
+                print("Thank you for playing Green Kitchen Adventure!")
+                print()
+                break
+        elif command == "14":
+            if save_game(player, rooms, save_code):
+                print("Game saved. Your code is: " + save_code)
         else:
-            print(red + "Invalid menu number! Please choose a number from 1 to 13!" + reset)
+            print(red + "Invalid menu number! Please choose a number from 1 to 14!" + reset)
             print()
 
 # Colors
@@ -204,21 +211,67 @@ for room in rooms:
         if other_room != room:
             room.exits.append(other_room)
 
-player_name = input("Enter your name: ")
-player_age = int(input("Enter your age: "))
 
-print()
-print("Player: " + player_name)
-print("Age: " + str(player_age))
+def start_game():
+    show_start_text("intro.txt")
+    show_start_text("instructions.txt")
+    while True:
+        print()
+        print("1. New game")
+        print("2. Continue a saved game")
+        print("3. Close")
+        choice = input("Enter number: ").strip()
+        if choice == "3":
+            return None, None
+        if choice != "1" and choice != "2":
+            print("Choose a number from 1 to 3.")
+            continue
+        code = input(
+            "Enter your save code using letters a-z and numbers: "
+        ).strip().lower()
+        try:
+            path = save_path(code)
+            if choice == "2":
+                player = load_game(rooms, code)
+                print("Saved game loaded.")
+                return player, code
+            if path.exists():
+                print(
+                    "That code already has a saved game. "
+                    "Continue it or choose another code."
+                )
+                continue
+        except (OSError, ValueError, UnicodeError):
+            print(
+                "Could not open that save. "
+                "Check the code or start a new game."
+            )
+            continue
+        player_name = input("Enter your name: ").strip()
+        if not player_name:
+            print("Please enter a name.")
+            continue
+        try:
+            player_age = int(input("Enter your age: "))
+        except ValueError:
+            print("Please enter your age as a whole number.")
+            continue
+        print()
+        print("Player: " + player_name)
+        print("Age: " + str(player_age))
+        if player_age < 12:
+            print()
+            print(red + "You are under 12, lucky you!" + reset)
+            print()
+            print(red + "But, unfortunately you cannot play yet!" + reset)
+            print()
+            print(red + "The game will now close" + reset)
+            return None, None
+        player = Player(player_name, player_age, changing_room)
+        return player, code
 
 
-if player_age < 12:
-    print()
-    print(red + "You are under 12, lucky you!" + reset)
-    print()
-    print(red + "But, unfortunately you cannot play yet!" + reset)
-    print()
-    print(red + "The game will now close" + reset)
-else:
-    player = Player(player_name, player_age, changing_room)
-    play(player)
+if __name__ == "__main__":
+    player, save_code = start_game()
+    if player is not None:
+        play(player, save_code)
