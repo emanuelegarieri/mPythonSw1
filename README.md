@@ -8,5 +8,5 @@ Emanuele Garieri
 
 ## Programming Project
 
-- Done until step 4
+- Done 
 
