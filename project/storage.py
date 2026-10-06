@@ -1,144 +1,134 @@
 import csv
-import os
 
 from pathlib import Path
 from models import Player
 
 
-progress_names = [
-    "work_clothes_worn",
-    "hands_washed",
-    "salad_prepared",
-    "salad_plated",
-    "kitchen_clean",
-    "bio_bag_full",
-    "bio_bag_disposed",
-    "clothes_dirty",
-    "towel_dirty",
-    "clothes_returned",
-    "towel_returned"
-]
-
+# Find the folder where this file is
 project_folder = Path(__file__).parent
 
 
 def save_path(code):
-    if not code or len(code) > 40:
-        raise ValueError("The save code is not valid.")
-
-    for character in code:
-        if character not in "abcdefghijklmnopqrstuvwxyz0123456789":
-            raise ValueError("Use only letters a-z and numbers.")
-
+    # Create the name of the save file
     filename = "save_" + code + ".csv"
-    return project_folder / filename
 
-
-def show_start_text(filename):
-    path = os.path.join(project_folder, filename)
-
-    try:
-        with open(path, "r", encoding="utf-8") as file:
-            print()
-            print(file.read().strip())
-    except OSError:
-        print("Could not read " + filename)
+    # Create the full path for the file
+    path = project_folder / filename
+    return path
 
 
 def save_game(player, rooms, code):
-    try:
-        with open(
-            save_path(code),
-            "w",
-            newline="",
-            encoding="utf-8"
-        ) as file:
-            writer = csv.writer(file)
+    # Find the path for the save file
+    path = save_path(code)
 
-            writer.writerow(["name", player.name])
-            writer.writerow(["age", player.age])
-            writer.writerow(["location", player.location.name])
+    # Open the save file for writing
+    save_file = open(path, "w", newline="", encoding="utf-8")
 
-            inventory_names = []
-            for item in player.items:
-                inventory_names.append(item.name)
+    # Create the CSV writer
+    writer = csv.writer(save_file)
 
-            writer.writerow(["inventory", "|".join(inventory_names)])
+    # Save the player information
+    writer.writerow(["name", player.name])
+    writer.writerow(["age", player.age])
+    writer.writerow(["location", player.location.name])
 
-            for room in rooms:
-                room_item_names = []
+    # Take the names of the items in the inventory
+    inventory_names = []
 
-                for item in room.items:
-                    room_item_names.append(item.name)
+    for item in player.items:
+        inventory_names.append(item.name)
 
-                writer.writerow([
-                    "room_" + room.name,
-                    "|".join(room_item_names)
-                ])
+    # Save the inventory in one row
+    writer.writerow(["inventory", "|".join(inventory_names)])
 
-            for progress_name in progress_names:
-                writer.writerow([
-                    progress_name,
-                    getattr(player, progress_name)
-                ])
+    # Save the items in each room
+    for room in rooms:
+        room_item_names = []
+        for item in room.items:
+            room_item_names.append(item.name)
+        writer.writerow(["room_" + room.name, "|".join(room_item_names)])
 
-        return True
+    # Save all the jobs done by the player
+    writer.writerow(["work_clothes_worn", player.work_clothes_worn])
+    writer.writerow(["hands_washed", player.hands_washed])
+    writer.writerow(["salad_prepared", player.salad_prepared])
+    writer.writerow(["salad_plated", player.salad_plated])
+    writer.writerow(["kitchen_clean", player.kitchen_clean])
+    writer.writerow(["bio_bag_full", player.bio_bag_full])
+    writer.writerow(["bio_bag_disposed", player.bio_bag_disposed])
+    writer.writerow(["clothes_dirty", player.clothes_dirty])
+    writer.writerow(["towel_dirty", player.towel_dirty])
+    writer.writerow(["clothes_returned", player.clothes_returned])
+    writer.writerow(["towel_returned", player.towel_returned])
 
-    except (OSError, ValueError):
-        print("Could not save the game.")
-        return False
+    # Close the save file
+    save_file.close()
 
 
 def load_game(rooms, code):
-    try:
-        data = {}
+    # Find the path of the saved game
+    path = save_path(code)
 
-        with open(
-            save_path(code),
-            "r",
-            newline="",
-            encoding="utf-8"
-        ) as file:
-            reader = csv.reader(file)
+    # Dictionary for all the saved information
+    data = {}
 
-            for row in reader:
-                if len(row) == 2:
-                    data[row[0]] = row[1]
+    # Open the saved game for reading
+    save_file = open(path, "r", newline="", encoding="utf-8")
 
-        room_lookup = {}
-        item_lookup = {}
+    # Create the CSV reader
+    reader = csv.reader(save_file)
 
-        for room in rooms:
-            room_lookup[room.name] = room
+    # Put each saved row in the dictionary
+    for row in reader:
+        if len(row) == 2:
+            data[row[0]] = row[1]
 
-            for item in room.items:
-                item_lookup[item.name] = item
+    # Close the save file
+    save_file.close()
 
-        player = Player(
-            data["name"],
-            int(data["age"]),
-            room_lookup[data["location"]]
-        )
+    # Dictionaries for finding rooms and items by name
+    room_lookup = {}
+    item_lookup = {}
 
-        inventory_names = data["inventory"].split("|")
+    # Add all the rooms and items to the dictionaries
+    for room in rooms:
+        room_lookup[room.name] = room
 
-        for item_name in inventory_names:
+        for item in room.items:
+            item_lookup[item.name] = item
+
+    # Create the player with the saved information
+    player = Player(data["name"], int(data["age"]), room_lookup[data["location"]])
+
+    # Take the names of the saved inventory items
+    inventory_names = data["inventory"].split("|")
+
+    # Return the saved items to the player inventory
+    for item_name in inventory_names:
+        if item_name:
+            player.items.append(item_lookup[item_name])
+
+    # Return the saved items to each room
+    for room in rooms:
+        room.items = []
+        saved_items = data["room_" + room.name].split("|")
+
+        for item_name in saved_items:
             if item_name:
-                player.items.append(item_lookup[item_name])
+                room.items.append(item_lookup[item_name])
 
-        for room in rooms:
-            room.items = []
-            saved_items = data["room_" + room.name].split("|")
+    # Return all the saved jobs to the player
+    player.work_clothes_worn = data["work_clothes_worn"] == "True"
+    player.hands_washed = data["hands_washed"] == "True"
+    player.salad_prepared = data["salad_prepared"] == "True"
+    player.salad_plated = data["salad_plated"] == "True"
+    player.kitchen_clean = data["kitchen_clean"] == "True"
+    player.bio_bag_full = data["bio_bag_full"] == "True"
+    player.bio_bag_disposed = data["bio_bag_disposed"] == "True"
+    player.clothes_dirty = data["clothes_dirty"] == "True"
+    player.towel_dirty = data["towel_dirty"] == "True"
+    player.clothes_returned = data["clothes_returned"] == "True"
+    player.towel_returned = data["towel_returned"] == "True"
 
-            for item_name in saved_items:
-                if item_name:
-                    room.items.append(item_lookup[item_name])
-
-        for progress_name in progress_names:
-            value = data[progress_name] == "True"
-            setattr(player, progress_name, value)
-
-        return player
-
-    except (OSError, ValueError, KeyError, csv.Error):
-        raise ValueError("The saved game is missing or invalid.")
+    # Return the loaded player to the main game
+    return player

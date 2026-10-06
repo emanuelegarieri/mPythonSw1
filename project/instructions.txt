@@ -1,9 +1,10 @@
 Choose the numbers shown in the menus, room lists, and item lists.
-Start in the Changing Room: collect Work Clothes and a Clean Towel.
+
+Start in the Changing Room: collect the Work Clothes and a Clean Towel.
 Enter the Kitchen, wash your hands, and collect every ingredient and object.
 Prepare the salad, clean the Kitchen, and dispose of the Bio Bag in the Garbage Room.
-Return the dirty work clothes and towel in the Changing Room, then choose Finish.
+Return the dirty work clothes and towel to the Changing Room, then choose Finish.
 
 Choose Save (14) to save and keep playing.
 Choose Exit (13) to save before closing.
-To resume, choose Continue at startup and enter the same save code.
+To resume, choose Continue when the game starts and enter the same save code.

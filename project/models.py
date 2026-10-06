@@ -82,7 +82,7 @@ class Player:
 
 
     def prepare_salad(self):
-        # If not kitchen
+        # If the player is not in the kitchen
         if self.location.name != "Kitchen":
             return blue + "You can only prepare the salad in the Kitchen" + reset
         # If already prepared
@@ -91,7 +91,7 @@ class Player:
         # If there are still items to collect in the kitchen (easy way)
         if len(self.location.items) != 0:
             return blue + "Collect all the Kitchen items first" + reset
-        # Boolean swithch
+        # Boolean switch
         self.salad_prepared = True
         self.salad_plated = True
         self.bio_bag_full = True
@@ -143,13 +143,13 @@ class Player:
         # All prepared and clean
         if not self.salad_plated or not self.kitchen_clean:
             return blue + "Prepare the salad and clean the Kitchen first" + reset
-        # If clothes are changed and towel is away
+        # If clothes and towel are already returned
         if self.clothes_returned and self.towel_returned:
             return blue + "The dirty clothes and towel are already returned" + reset
         # If never collected
         if not self.clothes_dirty or not self.towel_dirty:
             return blue + "There are no dirty clothes and towel to return" + reset
-        # If is missing one of the changing room item before returning them
+        # If one of the items is missing
         clothes_item = None
         towel_item = None
         for item in self.items:
