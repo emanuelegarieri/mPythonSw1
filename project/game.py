@@ -21,7 +21,7 @@ def show_room(player): # <-- Show room function
     else:
         number = 1
         for item in player.location.items:
-            print(str(number) + ". " + item.name)
+            print(f"{number}. {item.name}")
             number = number + 1
             
     # Prints the other rooms
@@ -112,12 +112,17 @@ def start_game():  # <-- Start the game and get player and save code
 
         # Ask the code for the saved game
         code = input(
-            "Enter your save code using letters a-z and numbers: "
+            "Enter your save code: "
         ).strip().lower()
 
         # If the code is empty, go back
         if code == "":
             print("Please enter a save code.")
+            continue
+
+        # The save code can contain only letters and numbers
+        if not code.isalnum():
+            print("Use only letters and numbers for the save code.")
             continue
 
         # Create the path for this save code
@@ -161,16 +166,14 @@ def start_game():  # <-- Start the game and get player and save code
         player_age = int(player_age)
         print()
         print("Player: " + player_name)
-        print("Age: " + str(player_age))
+        print(f"Age: {player_age}")
 
         # If the player is under 12, close the game
         if player_age < 12:
             print()
             print(red + "You are under 12, lucky you!" + reset)
-            print()
-            print(red + "But, unfortunately you cannot play yet!" + reset)
-            print()
-            print(red + "The game will now close" + reset)
+            print("But, unfortunately you cannot play yet!")
+            print("The game will now close")
             return None, None
         
         # Create the new player in the Changing Room
@@ -208,7 +211,7 @@ def play(player, save_code):  # <-- Main game function
             # Print all the available rooms with a number
             number = 1
             for room in player.location.exits:
-                print(str(number) + ". " + room.name)
+                print(f"{number}. {room.name}")
                 number = number + 1
 
             print()

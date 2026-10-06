@@ -1,0 +1,18 @@
+name,Ara
+age,28
+location,Kitchen
+inventory,Work Clothes|Clean Towel|Lettuce
+room_Changing Room,
+room_Kitchen,Feta|Tomatoes|Olive Oil|Salt and Pepper|Cucumber|Bowl|Plate|Bio Bag
+room_Garbage Room,
+work_clothes_worn,True
+hands_washed,True
+salad_prepared,False
+salad_plated,False
+kitchen_clean,False
+bio_bag_full,False
+bio_bag_disposed,False
+clothes_dirty,False
+towel_dirty,False
+clothes_returned,False
+towel_returned,False
